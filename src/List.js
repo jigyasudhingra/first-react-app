@@ -5,9 +5,20 @@ import {v4 as uuidv4} from 'uuid';
 export default function List() {
     
     const [lists, setLists] = useState([
-        {fname: 'Jai', lname:'Dhingra', city:'Delhi', id: 1},
-        {fname: 'Mario', lname:'fds', city:'Haryana', id: 2}
+        {fname: 'Mario', lname:'fdhgr', city:'sdfg', id: 0},
+        {fname: 'Shinchan', lname:'fds', city:'vsdf', id: 1}
     ])
+    
+    const [isUserClicked, setIsUserClicked] = useState(false)
+    const [selectedUser, setSelectedUser] = useState({fname:'', lname:'', city:'', id:''})
+    const [listIndex, setListIndex] = useState('')
+
+    const handleClick = (list, index) => {
+        console.log("Index", index)
+        setIsUserClicked(true)
+        setSelectedUser(list)
+        setListIndex(index)
+    }
 
     const addList = (name) => {
         setLists([...lists, {
@@ -17,26 +28,48 @@ export default function List() {
             id: uuidv4()
         }])
     }
-     
+    
+    const updateList = (name) => {
+        lists[listIndex] = name
+        setLists([...lists])
+    }
+
+    let styles = {
+        float:'right',
+        margin: 100,
+        padding: 20,
+        textAlign: 'center',
+        border: '2px solid purple',
+        justifyContent: 'center',
+    }
+
+    let styles1 = {
+        border: '4px solid lightblue',
+        backgroundColor: 'lightblue',
+        width: 300,
+        color: 'black',
+        textAlign: 'center',
+        borderRadius: 20
+    }
     return (
-        <div>
-            <Form addList={addList}/>
+        <>
+        <Form addList={addList} isUserClicked={isUserClicked} selectedUser={selectedUser} updateList={updateList} />
+        <div style={styles}>
             <br />
-            <hr />
             <br />
             <h2>Entered Items:</h2>
-            <ul>
-                {lists.map(list => {
+            <ol>
+                {lists.map( (list, index) => {
                     return (
-                    <div>
-                        <li key={list.id}>{list.fname} <br /> {list.lname} <br /> {list.city}</li>
+                    <div key={index} onClick={ () => handleClick(list, index) }>
+                        <li style={styles1} key={list.id}>{list.fname}</li>
                         <br />
                     </div>
                     );
                 })}
                 <br />
-            </ul>
+            </ol>
         </div>
-        
+        </>
     )
 }
