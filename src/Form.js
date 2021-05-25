@@ -3,28 +3,28 @@ import React, {useState, useEffect} from 'react';
 function Form({addList, isUserClicked, selectedUser, updateList}) {
     
     const [name, setName] = useState({fname:'', lname:'', city: ''})
-    //const [updateName, setUpdateName] = useState({})
-    // const [showForm, setShowForm] = useState(false)
-
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(name);
+        console.log(name, '\n Value Inserted');
         addList(name);
+        setName({fname:'', lname:'', city: ''})
     }
 
-    const handleUpdate = (e) => {
+    const handleUpdate = (e, name) => {
+        e.preventDefault()
         console.log('Update button clicked.')
+        console.log(name)
         updateList(name)
+        console.log('Update Finished...')
+        setName({fname:'', lname:'', city: ''})
     }
 
     useEffect(()=>{
 		if(isUserClicked){
 			setName(selectedUser)
 		}
-	})
-
-    // isUserClicked ? handleClick() : console.log('Nothing')
+	},[isUserClicked, selectedUser])
 
     let styles = {
         float:'left',
@@ -51,12 +51,9 @@ function Form({addList, isUserClicked, selectedUser, updateList}) {
                 <br />
                 <br />
 
-                { isUserClicked 
-                ?
-                <button onClick={(e) => handleUpdate(e)}>Update</button>
-                : 
-				<input type='submit' value='Submit' onClick={(e) => handleSubmit(e)}></input>
-                }
+                <button value='update' type='update' onClick={ (e) => handleUpdate(e, name)}>Update</button>
+				<button type='submit' value='submit' onClick={(e) => handleSubmit(e)}>Submit</button>
+                
                 <br />
                 <br />
                 
