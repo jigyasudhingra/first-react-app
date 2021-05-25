@@ -6,7 +6,7 @@ function Form({addList, isUserClicked, selectedUser, updateList}) {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(name, '\n Value Inserted');
+        console.log(name, 'Value Inserted');
         addList(name);
         setName({fname:'', lname:'', city: ''})
     }
