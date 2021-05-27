@@ -1,14 +1,31 @@
 import React, {useState, useEffect} from 'react';
 
+import {useDispatch, useSelector} from 'react-redux'
+import {addToList, listCreation, updateList} from './Redux/actionCreator'
+
 function Form({addList, isUserClicked, selectedUser, updateList}) {
     
     const [name, setName] = useState({fname:'', lname:'', city: ''})
+
+    //For Use Of Redux
+    const dispatch = useDispatch()
+    const {listDetails} = useSelector(state => state.listDetails)
+    const usersRedux = useSelector(state => state.listsRedux)
     
     const handleSubmit = (e) => {
+
         e.preventDefault();
-        console.log(name, 'Value Inserted');
-        addList(name);
+        
+        // ---- REACT ----
+        // console.log(name, 'Value Inserted');
+        // addList(name);
+        // setName({fname:'', lname:'', city: ''})
+
+        // ---- REDUX ----
+        dispatch(addToList(name))
+        console.log(name)
         setName({fname:'', lname:'', city: ''})
+
     }
 
     const handleUpdate = (e, name) => {
