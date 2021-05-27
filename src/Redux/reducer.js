@@ -1,10 +1,12 @@
 import { LIST_CREATION, UPDATE_LIST, ADD_TO_LIST } from "./actionConstants";
+import {v4 as uuidv4} from 'uuid';
 
 const initialState = {
     listDetails:{
         fname: '',
         lname: '',
-        city: ''
+        city: '',
+        id: uuidv4(),
     },
     listsRedux: []
 }
