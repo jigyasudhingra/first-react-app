@@ -1,34 +1,20 @@
 import React, {useState, useEffect} from 'react';
 
-import {useDispatch, useSelector} from 'react-redux'
-import {addToList, listCreation, updateList} from './Redux/actionCreator'
-
-function Form({addList, isUserClicked, selectedUser, updateList}) {
+function Form({addList, isListClicked, selectedList, updateList}) {
     
     const [name, setName] = useState({fname:'', lname:'', city: ''})
 
-    //For Use Of Redux
-    const dispatch = useDispatch()
-    const {listDetails} = useSelector(state => state.listDetails)
-    const usersRedux = useSelector(state => state.listsRedux)
-    
     const handleSubmit = (e) => {
 
         e.preventDefault();
-        
-        // ---- REACT ----
-        // console.log(name, 'Value Inserted');
-        // addList(name);
-        // setName({fname:'', lname:'', city: ''})
-
-        // ---- REDUX ----
-        dispatch(addToList(name))
-        console.log(name)
+        console.log('Value Inserted', name);
+        addList(name);
         setName({fname:'', lname:'', city: ''})
 
     }
 
     const handleUpdate = (e, name) => {
+
         e.preventDefault()
         console.log('Update button clicked.')
         console.log(name)
@@ -38,10 +24,11 @@ function Form({addList, isUserClicked, selectedUser, updateList}) {
     }
 
     useEffect(()=>{
-		if(isUserClicked){
-			setName(selectedUser)
+		if(isListClicked){
+            // console.log(isListClicked, selectedList)
+			setName(selectedList)
 		}
-	},[isUserClicked, selectedUser])
+	},[isListClicked, selectedList])
 
     let styles = {
         float:'left',
