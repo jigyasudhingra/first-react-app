@@ -7,7 +7,7 @@ export const listCreation = (details) => {
     }
 }
 
-export const updateList = (details) => {
+export const listUpdate = (details) => {
     return { 
         type: UPDATE_LIST,
         payload: details
