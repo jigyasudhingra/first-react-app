@@ -1,10 +1,17 @@
 import React, {useState, useEffect} from 'react';
 
-function Form({addList, isListClicked, selectedList, updateList}) {
-    
-    const [name, setName] = useState({fname:'', lname:'', city: ''})
+interface Props {
+    addList: (name: any) => void,
+    isListClicked: boolean,
+    selectedList: {fname: string, lname: string, city: string},
+    updateList: (name: any) => void,
+}
 
-    const handleSubmit = (e) => {
+const Form: React.FC <Props> = ({addList, isListClicked, selectedList, updateList}) => {
+    
+    const [name, setName] = useState<{fname: string, lname: string, city: string}>({fname:'', lname:'', city: ''})
+
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, name: { fname: string; lname: string; city: string; }) => {
 
         e.preventDefault();
         console.log('Value Inserted', name);
@@ -13,7 +20,7 @@ function Form({addList, isListClicked, selectedList, updateList}) {
 
     }
 
-    const handleUpdate = (e, name) => {
+    const handleUpdate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, name: { fname: string; lname: string; city: string; }) => {
 
         e.preventDefault()
         console.log('Update button clicked.')
@@ -25,22 +32,19 @@ function Form({addList, isListClicked, selectedList, updateList}) {
 
     useEffect(()=>{
 		if(isListClicked){
-            // console.log(isListClicked, selectedList)
 			setName(selectedList)
 		}
 	},[isListClicked, selectedList])
 
-    let styles = {
+    let styles: React.CSSProperties = {
         float:'left',
         height: 350,
         width: 300,
         margin: 100,
         padding: 50,
-        text: 'center',
         justifyContent: 'center',
         border: '2px solid purple'
     }
-
     return (
         <div >
             <form style={styles} >
@@ -55,8 +59,8 @@ function Form({addList, isListClicked, selectedList, updateList}) {
                 <br />
                 <br />
 
-                <button value='update' type='update' onClick={ (e) => handleUpdate(e, name)}>Update</button>
-				<button type='submit' value='submit' onClick={(e) => handleSubmit(e)}>Submit</button>
+                <button value='update' onClick={ (e) => handleUpdate(e, name)}>Update</button>
+				<button type='submit' value='submit' onClick={(e) => handleSubmit(e, name)}>Submit</button>
                 
                 <br />
                 <br />

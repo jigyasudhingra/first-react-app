@@ -1,18 +1,23 @@
 import { LIST_CREATION, UPDATE_LIST, ADD_TO_LIST } from "./actionConstants";
-import {v4 as uuidv4} from 'uuid';
 
-const initialState = {
-    listDetails:{
-        fname: '',
-        lname: '',
-        city: '',
-        id: uuidv4(),
-    },
-    listsRedux: []
+interface initialise {
+    fname: string,
+    lname:string,
+    city: string,
 }
 
-export default function listReducer(state=initialState, {type, payload})
+const initialState = {
+    listDetails: <initialise>{
+        fname: '',
+        lname: '',
+        city: ''
+    },
+    listsRedux: [ {fname: 'Mario', lname: 'fsdef', city: 'er'}, {fname: 'Shinchan', lname: 'dsf', city: 'cc'}]
+}
+
+const listReducer = (state: any, {type, payload}: any) =>
 {
+    state=initialState
     switch(type) {
         case LIST_CREATION:
         return {
@@ -22,13 +27,12 @@ export default function listReducer(state=initialState, {type, payload})
 
         case UPDATE_LIST:
         return {
-            ...state,
+            ...state,    
             listsRedux:[...payload]
         }
         case ADD_TO_LIST:
         return {
-            ...state,
-            listsRedux:[...state.listsRedux, payload]
+            ...state, listsRedux:[...state.listsRedux, payload]
         }
         
         default:{
@@ -36,3 +40,5 @@ export default function listReducer(state=initialState, {type, payload})
 		}
     }
 }
+
+export default listReducer

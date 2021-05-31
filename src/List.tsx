@@ -1,32 +1,33 @@
-import React, {useState} from 'react';
+import React, { useState} from 'react';
 import Form from './Form';
 
 import {useDispatch, useSelector} from 'react-redux'
 import {addToList, listUpdate} from './Redux/actionCreator'
+import {RootState, AppDispatch} from './Redux/configureStore'
 
-export default function List() {
-    
+const List = () => {
+
     // const [lists, setLists] = useState([
     //     {fname: 'Mario', lname:'fdhgr', city:'sdfg', id: 0},
     //     {fname: 'Shinchan', lname:'fds', city:'vsdf', id: 1}
     // ])
     
-    const [isListClicked, setIsListClicked] = useState(false)
-    const [selectedList, setSelectedList] = useState({fname:'', lname:'', city:'', id:''})
-    const [listIndex, setListIndex] = useState('')
+    const [isListClicked, setIsListClicked] = useState<boolean>(false)
+    const [selectedList, setSelectedList] = useState({fname:'', lname:'', city:''})
+    const [listIndex, setListIndex] = useState<number>(0)
 
     // --- Redux ---
-    const dispatch = useDispatch()
-    const listsRedux = useSelector(state => state.listsRedux)
+    const dispatch = useDispatch<AppDispatch>()
+    const listsRedux = useSelector((state: RootState) => state.listsRedux)
 
-    const handleClick = (list, index) => {
+    const handleClick = (list: {id: number, fname: string, lname: string, city: string}, index: number) => {
         console.log("Index", index)
         setIsListClicked(true)
         setSelectedList(list)
         setListIndex(index)
     }
 
-    const addList = (name) => {
+    const addList: any = (name: object) => {
 
         // --- React ---
         // setLists([{
@@ -40,20 +41,20 @@ export default function List() {
         dispatch(addToList(name))
     }
     
-    const updateList = (name) => {
+    const updateList = (name: object) => {
         
         // --- React ---
         // lists[listIndex] = name
         // setLists([...lists])
 
         // --- Redux ---
-        let updatedLists = [...listsRedux]
+        let updatedLists: any= [...listsRedux]
         updatedLists[listIndex] = {...updatedLists[listIndex], ...name}
         dispatch(listUpdate(updatedLists))
-        setListIndex(null)
+
     }
 
-    let styles = {
+    let styles: React.CSSProperties = {
         float:'right',
         margin: 100,
         padding: 20,
@@ -62,7 +63,7 @@ export default function List() {
         justifyContent: 'center',
     }
 
-    let styles1 = {
+    let styles1: React.CSSProperties = {
         border: '4px solid lightblue',
         backgroundColor: 'lightblue',
         width: 300,
@@ -79,7 +80,7 @@ export default function List() {
             <h2>Entered Items:</h2>
             <ol> 
                 {/* Here, I directly use listsRedux to go through all list, rather than 'lists', which I used previously. */}
-                {listsRedux.map( (list, index) => {
+                {listsRedux.map( (list: {id: number, fname: string, lname: string, city: string}, index: number ) => {
                     return (
                     <div key={index} onClick={ () => handleClick(list, index) }>
                         <li style={styles1} key={list.id}>{list.fname}</li>
@@ -93,3 +94,5 @@ export default function List() {
         </>
     )
 }
+
+export default List
